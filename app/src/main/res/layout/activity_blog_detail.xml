@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_action_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:id="@+id/contentTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleTextView"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contentTextView"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- 底部操作栏 -->
+    <LinearLayout
+        android:id="@+id/bottom_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="2dp">
+
+        <!-- 点赞按钮 -->
+        <ImageButton
+            android:id="@+id/btn_like"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/selector_like"
+            android:contentDescription="thumbs_up"
+            android:layout_weight="1" />
+
+        <!-- 评论按钮 -->
+        <ImageButton
+            android:id="@+id/btn_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/comment"
+            android:contentDescription="comment"
+            android:layout_weight="1" />
+
+        <!-- 收藏按钮 -->
+        <ImageButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/selector_favorite"
+            android:contentDescription="favorite"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</RelativeLayout>

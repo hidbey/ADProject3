@@ -1,0 +1,129 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/profilePicture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onProfilePictureClick" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateDisplayNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Display Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateDisplayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateEmailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateProfileTaglineLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ProfileTagline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateProfileTagline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <!-- 更多的TextInputLayout和TextInputEditText，对应于其他的用户属性 -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateLocationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateMyTechStackLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tech stack">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateMyTechStack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateGithubLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Github">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateGithub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateLinkedinLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Linkinedin">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateLinkedin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateAboutmeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="About me">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateAbout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text=""/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:onClick="onSaveClick" />
+    </LinearLayout>
+
+</ScrollView>
