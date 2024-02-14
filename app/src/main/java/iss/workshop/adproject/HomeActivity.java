@@ -97,9 +97,9 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
                 if (item.getItemId() == R.id.homeImage) {
                     position = 0;
                 } else if (item.getItemId() == R.id.historyImage) {
-                    position = 1;
-                } else if (item.getItemId() == R.id.searchImage) {
                     position = 2;
+                } else if (item.getItemId() == R.id.searchImage) {
+                    position = 1;
                 } else if (item.getItemId() == R.id.uploadImage) {
                     position = 3;
                 }
@@ -120,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
         myHomeAdapter.setFragments(fragments);
         fragments.add(new BlogsViewingFragment());
         fragments.add(new BlankFragment2());
-        fragments.add(new BlankFragment3());
+        fragments.add(new HistoryViewingFragment());
         fragments.add(new BlankFragment4());
         viewPager2.setAdapter(myHomeAdapter);
 
@@ -132,58 +132,6 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
         });//监听页面变化的消息，当页面变化时传递当前页面的位置，也就是当前页面对应的fragment在集合中的索引
     }
 
-
-
-//    public void initImages(){
-//        homeImage = findViewById(R.id.homeImage);
-//        searchImage = findViewById(R.id.searchImage);
-//        historyImage = findViewById(R.id.historyImage);
-//        uploadImage = findViewById(R.id.uploadImage);
-//
-//        imageViewCurrent = homeImage;
-//        imageViewCurrent.setSelected(true);
-//    }
-//
-//    public void changeClick(View view){
-//        imageViewCurrent.setSelected(false);//如果当前是在第二个，点击第三个的话，就让第二个为false，第三个为true
-//        if (view.getId()==R.id.homeImage){
-//            viewPager2.setCurrentItem(0,true);//使得页面切换具有平滑效果
-//            imageViewCurrent = homeImage;
-//            imageViewCurrent.setSelected(true);
-//        } else if (view.getId()==R.id.historyImage) {
-//            viewPager2.setCurrentItem(2,true);
-//            imageViewCurrent = historyImage;
-//            imageViewCurrent.setSelected(true);
-//        } else if (view.getId()==R.id.searchImage) {
-//            viewPager2.setCurrentItem(1,true);
-//            imageViewCurrent = searchImage;
-//            imageViewCurrent.setSelected(true);
-//        }else if (view.getId()==R.id.uploadImage){
-//            viewPager2.setCurrentItem(3,true);
-//            imageViewCurrent = uploadImage;
-//            imageViewCurrent.setSelected(true);
-//        }
-//    }
-//
-//    public void changePager(int position){
-//        if (position==0){
-//            imageViewCurrent.setSelected(false);
-//            imageViewCurrent = homeImage;
-//            imageViewCurrent.setSelected(true);
-//        } else if (position==1) {
-//            imageViewCurrent.setSelected(false);
-//            imageViewCurrent = searchImage;
-//            imageViewCurrent.setSelected(true);
-//        } else if (position==2) {
-//            imageViewCurrent.setSelected(false);
-//            imageViewCurrent = historyImage;
-//            imageViewCurrent.setSelected(true);
-//        }else if (position==3){
-//            imageViewCurrent.setSelected(false);
-//            imageViewCurrent = uploadImage;
-//            imageViewCurrent.setSelected(true);
-//        }
-//    }
 
     private void registerForResult() {
         resultLauncher = registerForActivityResult(
@@ -201,9 +149,9 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
             case 0:
                 return R.id.homeImage;
             case 1:
-                return R.id.historyImage;
-            case 2:
                 return R.id.searchImage;
+            case 2:
+                return R.id.historyImage;
             case 3:
                 return R.id.uploadImage;
             default:

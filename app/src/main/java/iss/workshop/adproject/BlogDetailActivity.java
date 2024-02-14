@@ -36,10 +36,7 @@ public class BlogDetailActivity extends AppCompatActivity {
         rvComments.setLayoutManager(new LinearLayoutManager(this));
 
         // TODO: 从服务器获取评论
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("User1", "This is comment 1", "11"));
-        comments.add(new Comment("User2", "This is comment 2", "11"));
-        comments.add(new Comment("User3", "This is comment 3", "11"));
+        List<Comment> comments = blog.getBlogComments();
         CommentAdapter adapter = new CommentAdapter(comments); // 假设 commentsList 是从服务器获取的评论列表
         rvComments.setAdapter(adapter);
 

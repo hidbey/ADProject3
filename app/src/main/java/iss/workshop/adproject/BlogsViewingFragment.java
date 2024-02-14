@@ -58,11 +58,6 @@ public class BlogsViewingFragment extends Fragment {
 //            String title = getTitles().get(position);
 //            Toast.makeText(getActivity(), "Clicked on: " + title, Toast.LENGTH_SHORT).show();
 //        });
-
-
-
-
-
         return view;
     }
 

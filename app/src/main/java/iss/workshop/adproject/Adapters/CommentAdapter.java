@@ -31,9 +31,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
-        holder.tvUsername.setText(comment.getUsername());
-        holder.tvCommentText.setText(comment.getCommentText());
-        holder.tvTimestamp.setText(comment.getTimestamp());
+       holder.tvUsername.setText(comment.getCommentBlogUser().getDisplayName());
+       holder.tvCommentText.setText(comment.getCommentContent());
+       holder.tvTimestamp.setText("yhh");
     }
 
     @Override

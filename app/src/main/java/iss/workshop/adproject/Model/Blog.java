@@ -20,8 +20,17 @@ public class Blog implements Serializable {
     private List<BlogHistory> blogHistories;
 
     private BlogUser blogUser;
+    private List<Comment> blogComments;
 
     public Blog() {
+    }
+
+    public List<Comment> getBlogComments() {
+        return blogComments;
+    }
+
+    public void setBlogComments(List<Comment> blogComments) {
+        this.blogComments = blogComments;
     }
 
     public Blog(String image, int readingTime, String contentTitle, String subTitle, String content, String blogTime,
@@ -162,6 +171,7 @@ public class Blog implements Serializable {
                 + ", blogStatus=" + blogStatus + ", blogCommentCount=" + blogCommentCount + ", blogLikeCount="
                 + blogLikeCount + "]";
     }
+
 
 
 }

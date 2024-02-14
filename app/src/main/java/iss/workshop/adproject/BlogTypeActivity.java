@@ -122,6 +122,8 @@ public class BlogTypeActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()&&response.body()!=null){
                             Log.d("Retrofit", "Successfully post");
+
+
                         }
                     }
 

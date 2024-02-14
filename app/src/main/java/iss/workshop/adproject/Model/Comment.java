@@ -1,38 +1,53 @@
 package iss.workshop.adproject.Model;
 
-public class Comment {
-    private String username;
-    private String commentText;
-    private String timestamp; // 格式化的时间字符串
+import java.io.Serializable;
+
+public class Comment implements Serializable {
+    private int commentId;
+    private String commentContent;
+    private Blog commentBlog;
+    private BlogUser commentBlogUser; // 格式化的时间字符串
 
     // 构造方法、getter 和 setter
-    public Comment(String username, String commentText, String timestamp) {
-        this.username = username;
-        this.commentText = commentText;
-        this.timestamp = timestamp;
+
+    public int getCommentId() {
+        return commentId;
     }
 
-    public String getCommentText() {
-        return commentText;
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
 
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
+    public String getCommentContent() {
+        return commentContent;
     }
 
-    public String getUsername() {
-        return username;
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public Blog getCommentBlog() {
+        return commentBlog;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public void setCommentBlog(Blog commentBlog) {
+        this.commentBlog = commentBlog;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public BlogUser getCommentBlogUser() {
+        return commentBlogUser;
     }
+
+    public void setCommentBlogUser(BlogUser commentBlogUser) {
+        this.commentBlogUser = commentBlogUser;
+    }
+
+    public Comment(int commentId, String commentContent, Blog commentBlog, BlogUser commentBlogUser) {
+        this.commentId = commentId;
+        this.commentContent = commentContent;
+        this.commentBlog = commentBlog;
+        this.commentBlogUser = commentBlogUser;
+    }
+
+    public Comment(){}
 }
