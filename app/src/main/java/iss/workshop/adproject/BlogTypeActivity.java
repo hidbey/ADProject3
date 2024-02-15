@@ -67,7 +67,6 @@ public class BlogTypeActivity extends AppCompatActivity {
         id  = pref.getInt("user",-1);
         uDService = retrofit.create(UserDataService.class);
         bDService = retrofit.create(BlogDataService.class);
-        findBlogUserById(id);
         initIntent();
         initComponents();
         initChipGroup();
@@ -99,7 +98,7 @@ public class BlogTypeActivity extends AppCompatActivity {
                 Collections.addAll(languages,"Chinese","English");
 
                 blog.setBlogTime(getPostTime());
-                currentUser.setDisplayName("yhh");
+                currentUser.setDisplayName("ioioioio");
                 blog.setBlogUser(currentUser);
 
                 blog.setBlogCommentCount(0);
@@ -117,7 +116,7 @@ public class BlogTypeActivity extends AppCompatActivity {
                 String json = gson.toJson(blog);
                 Log.d("Retrofit", "Request Body: " + json);
 
-                Call<ResponseBody> call = bDService.createBlog(blog);
+                Call<ResponseBody> call = bDService.createBlog(blog,id);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -192,23 +191,6 @@ public class BlogTypeActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
     }
 
-    protected void findBlogUserById(int id){
-        Call<BlogUser> call = uDService.getBloguserById(id);
-        call.enqueue(new Callback<BlogUser>() {
-
-            @Override
-            public void onResponse(Call<BlogUser> call, Response<BlogUser> response) {
-                if (response.isSuccessful()&&response.body()!=null){
-                    currentUser = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BlogUser> call, Throwable t) {
-
-            }
-        });
-    }
 
     public String getPostTime() {
         LocalDate createdTime = LocalDate.now();

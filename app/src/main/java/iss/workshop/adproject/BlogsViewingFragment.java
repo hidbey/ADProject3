@@ -51,13 +51,6 @@ public class BlogsViewingFragment extends Fragment {
         bDService = retrofit.create(BlogDataService.class);
 
         getTitles();
-
-
-//        adapter.setOnItemClickListener(position -> {
-//            // 处理点击事件
-//            String title = getTitles().get(position);
-//            Toast.makeText(getActivity(), "Clicked on: " + title, Toast.LENGTH_SHORT).show();
-//        });
         return view;
     }
 

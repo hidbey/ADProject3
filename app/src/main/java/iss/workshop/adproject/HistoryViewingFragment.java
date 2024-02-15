@@ -73,7 +73,6 @@ public class HistoryViewingFragment extends Fragment {
                 if (response.isSuccessful()&&response.body()!=null){
                     List<BlogGroup>groups = new ArrayList<>();
                     titles = response.body();
-
                     BlogGroup blogGroup = new BlogGroup();
                     blogGroup.setGroupName("today");
                     blogGroup.setExpanded(true);
