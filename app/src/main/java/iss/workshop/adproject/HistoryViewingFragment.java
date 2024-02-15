@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import iss.workshop.adproject.Adapters.ExpandableGroupAdapter;
@@ -31,11 +32,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HistoryViewingFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private ExpandableGroupAdapter adapter;
     private BlogDataService bDService;
-    private List<Blog> titles = new ArrayList<>();
+    private List<List<Blog>> titles = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,37 +60,44 @@ public class HistoryViewingFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         int id = pref.getInt("user",-1);
         getTitles(id);
-
-//        adapter.setOnItemClickListener(position -> {
-//            // 处理点击事件
-//            String title = getTitles().get(position);
-//            Toast.makeText(getActivity(), "Clicked on: " + title, Toast.LENGTH_SHORT).show();
-//        });
     return view;
     }
 
     private void getTitles(int id) {
         // TODO: 返回标题列表数据，例如从数据库或服务器获取
 
-        Call<List<Blog>> call = bDService.getBlogHistory(id);
-        call.enqueue(new Callback<List<Blog>>() {
+        Call<List<List<Blog>>> call = bDService.getBlogHistory(id);
+        call.enqueue(new Callback<List<List<Blog>>>() {
             @Override
-            public void onResponse(Call<List<Blog>> call, Response<List<Blog>> response) {
+            public void onResponse(Call<List<List<Blog>>> call, Response<List<List<Blog>>> response) {
                 if (response.isSuccessful()&&response.body()!=null){
                     List<BlogGroup>groups = new ArrayList<>();
                     titles = response.body();
+
                     BlogGroup blogGroup = new BlogGroup();
                     blogGroup.setGroupName("today");
                     blogGroup.setExpanded(true);
-                    blogGroup.setBlogs(titles);
+                    blogGroup.setBlogs(titles.get(0));
                     groups.add(blogGroup);
+                    BlogGroup blogGroup1 = new BlogGroup();
+                    blogGroup1.setGroupName("in 3 days");
+                    blogGroup1.setBlogs(titles.get(1));
+                    BlogGroup blogGroup2 = new BlogGroup();
+                    blogGroup2.setBlogs(titles.get(2));
+                    blogGroup2.setGroupName("in 7 days");
+                    BlogGroup blogGroup3 = new BlogGroup();
+                    blogGroup3.setGroupName("longer");
+                    blogGroup3.setBlogs(titles.get(3));
+                    groups.add(blogGroup1);
+                    groups.add(blogGroup2);
+                    groups.add(blogGroup3);
                     adapter = new ExpandableGroupAdapter(getActivity(),groups);
                     recyclerView.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Blog>> call, Throwable t) {
+            public void onFailure(Call<List<List<Blog>>> call, Throwable t) {
             }
         });
     }

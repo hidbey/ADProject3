@@ -19,5 +19,5 @@ public interface BlogDataService {
     Call<ResponseBody> createBlog(@Body Blog blog);
 
     @GET("/home/api/create/history/{id}")
-    Call<List<Blog>> getBlogHistory(@Path("id")int id);
+    Call<List<List<Blog>>> getBlogHistory(@Path("id")int id);
 }

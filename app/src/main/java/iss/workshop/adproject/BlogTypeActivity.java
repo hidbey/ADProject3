@@ -47,7 +47,7 @@ public class BlogTypeActivity extends AppCompatActivity {
     int id;
     UserDataService uDService;
     BlogDataService bDService;
-    BlogUser currentUser;
+    BlogUser currentUser = new BlogUser();
     TextView contentTitleTextView;
     private static final int RESULT_LOAD_IMAGE = 1;
     Toolbar toolbar;
@@ -64,14 +64,14 @@ public class BlogTypeActivity extends AppCompatActivity {
                 .baseUrl("http://10.249.155.87:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        id  = pref.getInt("userId",-1);
+        id  = pref.getInt("user",-1);
         uDService = retrofit.create(UserDataService.class);
         bDService = retrofit.create(BlogDataService.class);
-
+        findBlogUserById(id);
         initIntent();
         initComponents();
         initChipGroup();
-        findBlogUserById(id);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +99,7 @@ public class BlogTypeActivity extends AppCompatActivity {
                 Collections.addAll(languages,"Chinese","English");
 
                 blog.setBlogTime(getPostTime());
+                currentUser.setDisplayName("yhh");
                 blog.setBlogUser(currentUser);
 
                 blog.setBlogCommentCount(0);
@@ -111,7 +112,7 @@ public class BlogTypeActivity extends AppCompatActivity {
                 blog.setLanguageSelected(languages);
                 blog.setBlogStatus(BlogStatusEnum.POSTED);
                 blog.setReadingTime(0);//后面要改
-
+                blog.setBlogComments(new ArrayList<>());
                 Gson gson = new GsonBuilder().serializeNulls().create();
                 String json = gson.toJson(blog);
                 Log.d("Retrofit", "Request Body: " + json);
@@ -122,8 +123,6 @@ public class BlogTypeActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()&&response.body()!=null){
                             Log.d("Retrofit", "Successfully post");
-
-
                         }
                     }
 
