@@ -75,7 +75,8 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
                     Intent intent = new Intent(HomeActivity.this, UpdateProfile.class);//直接用this,NavigationView.OnNavigationItemSelectedListener 接口的实例，而不是 Activity 的实例。
                     resultLauncher.launch(intent);
                 } else if (item.getItemId()==R.id.settings) {
-                    //进入
+                    Intent intent1 = new Intent(HomeActivity.this,ProfileSetting.class);
+                    resultLauncher.launch(intent1);
                 } else if (item.getItemId()==R.id.logout) {
                     new AlertDialog.Builder(HomeActivity.this)
                             .setTitle("Logout")

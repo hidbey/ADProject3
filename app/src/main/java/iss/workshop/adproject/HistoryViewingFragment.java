@@ -19,8 +19,6 @@ import android.view.ViewGroup;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import iss.workshop.adproject.Adapters.ExpandableGroupAdapter;
 
@@ -28,12 +26,6 @@ import iss.workshop.adproject.DataService.BlogDataService;
 import iss.workshop.adproject.Model.Blog;
 import iss.workshop.adproject.Model.BlogGroup;
 import iss.workshop.adproject.Model.BlogHistoryViewModel;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class HistoryViewingFragment extends Fragment {//只观察数据变化并更新UI
     private RecyclerView recyclerView;
     private ExpandableGroupAdapter adapter;
@@ -60,7 +52,7 @@ public class HistoryViewingFragment extends Fragment {//只观察数据变化并
         super.onViewCreated(view, savedInstanceState);
         BlogHistoryViewModel viewModel = new ViewModelProvider(this).get(BlogHistoryViewModel.class);
 
-        viewModel.getBlogGroups().observe(getViewLifecycleOwner(), blogGroups -> {
+        viewModel.getBlogGroups().observe(getViewLifecycleOwner(), blogGroups -> {//当数据变化时执行该程序
             adapter.setBlogGroups(blogGroups);
         });
 

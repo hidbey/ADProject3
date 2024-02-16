@@ -22,8 +22,6 @@ import java.time.LocalDate;
 import iss.workshop.adproject.DataService.UserDataService;
 import iss.workshop.adproject.Model.BUserStatusEnum;
 import iss.workshop.adproject.Model.BlogUser;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -28,13 +28,19 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public ExpandableGroupAdapter(Context context, List<BlogGroup> blogGroups) {
+    public ExpandableGroupAdapter(Context context, List<BlogGroup> blogGroups) {//
         this.context = context;
         this.blogGroups = blogGroups;
     }
 
     public void setBlogGroups(List<BlogGroup> blogGroups) {
         this.blogGroups = blogGroups;
+        List<Blog>blogs = blogGroups.get(0).getBlogs();
+//        if (blogs.size()!=0){
+//            Blog blog = blogs.get(blogs.size()-1);
+//            addBlogToFirstGroup(blog);
+//        }
+
         notifyDataSetChanged();
     }
 
@@ -84,12 +90,12 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void addBlogToFirstGroup(Blog newBlog) {
-        if (!blogGroups.isEmpty()) {
+
             BlogGroup firstGroup = blogGroups.get(0);
             firstGroup.getBlogs().add(firstGroup.getBlogs().size(), newBlog); // 在列表开始处添加
-            // 通知RecyclerView在第一个header直接底下插入了新条目
+            //通知RecyclerView在第一个header直接底下插入了新条目
             notifyItemInserted(firstGroup.getBlogs().size()+1);
-        }
+
     }
 
     private BlogGroup getGroupByPosition(int position) {
@@ -103,7 +109,7 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 cumulatedSize += group.getBlogs().size();
             }
         }
-        return null; // Should never happen
+        return null;
     }
 
     private Blog getBlogByPosition(int position) {
@@ -186,14 +192,14 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (group != null) {
                         group.setExpanded(!group.isExpanded());
                         if (group.isExpanded()) {
-                            int startPos = getGroupStartPos(group) + 1; // 获取组开始的位置，加1跳过头部
+                            int startPos = getGroupStartPos(group) + 1; //获取组开始的位置，加1跳过头部
                             for (int i = 0; i < group.getBlogs().size(); i++) {
-                                notifyItemInserted(startPos + i);
+                                notifyItemInserted(startPos + i);//进行i次循环去提醒适配器插入新的数据达到更新ui的效果
                             }
                         }else {
                             int startPos = getGroupStartPos(group) + 1; // 同样获取组开始的位置，加1跳过头部
                             for (int i = group.getBlogs().size() - 1; i >= 0; i--) {
-                                notifyItemRemoved(startPos + i);
+                                notifyItemRemoved(startPos + i);//和上面一样
                             }
                         }
                         rotateIndicator(group.isExpanded()); // 根据组的展开状态旋转指示器
@@ -203,7 +209,7 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         private int getGroupStartPos(BlogGroup group){
-            int pos = 0;
+            int pos = 0;//从头开始遍历每一个bloggroup，如果到达一个group名字和你惦记的一样，说明到达，
             for (BlogGroup blogGroup:blogGroups) {
                 if (blogGroup.getGroupName().equals(group.getGroupName())){
                     return pos;
