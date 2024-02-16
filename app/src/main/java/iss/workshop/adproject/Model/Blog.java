@@ -11,8 +11,8 @@ public class Blog implements Serializable {
     private String subTitle;
     private String content;
     private String blogTime;
-    private List<String> languageSelected;
-    private List<String> techniqueSelected;
+    private String languageSelected;
+    private String techniqueSelected;
     private BlogStatusEnum blogStatus;
     private int blogCommentCount;
     private int blogLikeCount;
@@ -34,7 +34,7 @@ public class Blog implements Serializable {
     }
 
     public Blog(String image, int readingTime, String contentTitle, String subTitle, String content, String blogTime,
-                List<String> languageSelected, List<String> techniqueSelected, BlogStatusEnum blogStatus,
+                String languageSelected, String techniqueSelected, BlogStatusEnum blogStatus,
                 int blogCommentCount, int blogLikeCount, List<BlogHistory> blogHistories, BlogUser blogUser) {
         this.image = image;
         this.readingTime = readingTime;
@@ -107,19 +107,19 @@ public class Blog implements Serializable {
         this.blogTime = blogTime;
     }
 
-    public List<String> getLanguageSelected() {
+    public String getLanguageSelected() {
         return languageSelected;
     }
 
-    public void setLanguageSelected(List<String> languageSelected) {
+    public void setLanguageSelected(String languageSelected) {
         this.languageSelected = languageSelected;
     }
 
-    public List<String> getTechniqueSelected() {
+    public String getTechniqueSelected() {
         return techniqueSelected;
     }
 
-    public void setTechniqueSelected(List<String> techniqueSelected) {
+    public void setTechniqueSelected(String techniqueSelected) {
         this.techniqueSelected = techniqueSelected;
     }
 

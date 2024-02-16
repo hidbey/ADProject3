@@ -93,6 +93,7 @@ public class Login extends AppCompatActivity {
                         SharedPreferences.Editor editor = pref.edit();
                         //edit.putSerializable("custom_object", user);不知道为什么报错
                         editor.putInt("user",user.getUserId());
+                        editor.putString("userName",user.getDisplayName());
                         editor.commit();
                         inHomePage();
                     }else {

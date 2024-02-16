@@ -50,10 +50,15 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
         navigationView = findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0);
         usernameText = headerView.findViewById(R.id.usernameText);
-        usernameText.setText("Hello, "+pref.getString("username",null));
+        usernameText.setText("Hello, "+pref.getString("userName",null));
         drawerLayout = findViewById(R.id.drawer_layout);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         initViewpager2(viewPager2);
+
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("SHOW_HISTORY_FRAGMENT",false)){
+            viewPager2.setCurrentItem(2);
+        }
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

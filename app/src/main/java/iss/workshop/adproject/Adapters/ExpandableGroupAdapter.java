@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import iss.workshop.adproject.BlogDetailActivity;
@@ -30,6 +31,11 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public ExpandableGroupAdapter(Context context, List<BlogGroup> blogGroups) {
         this.context = context;
         this.blogGroups = blogGroups;
+    }
+
+    public void setBlogGroups(List<BlogGroup> blogGroups) {
+        this.blogGroups = blogGroups;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -74,6 +80,15 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         } else if (holder instanceof TitleViewHolder) {
             Blog blog = getBlogByPosition(position);
             ((TitleViewHolder) holder).bind(blog);
+        }
+    }
+
+    public void addBlogToFirstGroup(Blog newBlog) {
+        if (!blogGroups.isEmpty()) {
+            BlogGroup firstGroup = blogGroups.get(0);
+            firstGroup.getBlogs().add(firstGroup.getBlogs().size(), newBlog); // 在列表开始处添加
+            // 通知RecyclerView在第一个header直接底下插入了新条目
+            notifyItemInserted(firstGroup.getBlogs().size()+1);
         }
     }
 

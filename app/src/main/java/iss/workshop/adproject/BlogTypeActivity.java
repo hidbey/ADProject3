@@ -39,10 +39,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BlogTypeActivity extends AppCompatActivity {
-    String contentTitle,subTitle,content;
+    String contentTitle,subTitle,content, techList;
     Button button;
     ChipGroup coverChipGroup,techChipGroup;
-    List<String> techList = new ArrayList<>();
     Blog blog = new Blog();
     int id;
     UserDataService uDService;
@@ -61,7 +60,7 @@ public class BlogTypeActivity extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/")
+                .baseUrl("http://192.168.1.126:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         id  = pref.getInt("user",-1);
@@ -90,12 +89,10 @@ public class BlogTypeActivity extends AppCompatActivity {
                         Chip chip = (Chip) childView;
 
                         if (chip.isChecked()) {
-                            techList.add(chip.getText().toString());
+                            techList = techList+", "+chip.getText().toString();
                         }
                     }
                 }
-                List<String>languages = new ArrayList<>();
-                Collections.addAll(languages,"Chinese","English");
 
                 blog.setBlogTime(getPostTime());
                 currentUser.setDisplayName("ioioioio");
@@ -108,7 +105,7 @@ public class BlogTypeActivity extends AppCompatActivity {
                 blog.setSubTitle(subTitle);
                 blog.setImage(null);
                 blog.setTechniqueSelected(techList);
-                blog.setLanguageSelected(languages);
+                blog.setLanguageSelected("Chinese,English");
                 blog.setBlogStatus(BlogStatusEnum.POSTED);
                 blog.setReadingTime(0);//后面要改
                 blog.setBlogComments(new ArrayList<>());
@@ -122,6 +119,9 @@ public class BlogTypeActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()&&response.body()!=null){
                             Log.d("Retrofit", "Successfully post");
+                            Intent intent = new Intent(BlogTypeActivity.this, HomeActivity.class);
+                            intent.putExtra("SHOW_HISTORY_FRAGMENT", true);
+                            startActivity(intent);
                         }
                     }
 
@@ -172,11 +172,9 @@ public class BlogTypeActivity extends AppCompatActivity {
                     contentTitleTextView.setLayoutParams(layoutParams);
                     // 显示 ImageView
                     imageUpload.setVisibility(View.VISIBLE);
-                } else if (checkedId == R.id.chip_no_cover) {
-                    // 如果选择了“无封面”，设置 TextView 宽度为 match_parent
+                } else if (checkedId == R.id.chip_no_cover) { //如果选择了“无封面”，设置TextView宽度为match_parent
                     contentTitleTextView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
                     contentTitleTextView.requestLayout();
-
                     // 隐藏 ImageView
                     imageUpload.setVisibility(View.GONE);
                 }
@@ -196,7 +194,6 @@ public class BlogTypeActivity extends AppCompatActivity {
         LocalDate createdTime = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
         String formattedDate = createdTime.format(formatter);
-
         return formattedDate;
     }
 

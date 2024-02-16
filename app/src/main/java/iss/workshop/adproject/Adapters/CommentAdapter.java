@@ -33,7 +33,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         Comment comment = comments.get(position);
        holder.tvUsername.setText(comment.getCommentBlogUser().getDisplayName());
        holder.tvCommentText.setText(comment.getCommentContent());
-       holder.tvTimestamp.setText("yhh");
+       holder.tvTimestamp.setText("");
     }
 
     @Override

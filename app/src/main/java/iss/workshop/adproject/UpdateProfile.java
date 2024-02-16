@@ -193,6 +193,7 @@ public class UpdateProfile extends AppCompatActivity {
             simplUser.setLinkedinLink(updateLinkedin.getText().toString());
             simplUser.setGithubLink(updateGithub.getText().toString());
             simplUser.setMyTechStack(updateMyTechStack.getText().toString());
+
             saveUserInfo(simplUser);
         }else {
             Toast toast = Toast.makeText(this,"inputs have error",Toast.LENGTH_SHORT);
@@ -207,7 +208,9 @@ public class UpdateProfile extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()&&response.body()!=null){
-
+                    SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("userName",updateDisplayName.getText().toString());
                     setResult(RESULT_OK);
                     finish();
                 }else{
@@ -231,32 +234,5 @@ public class UpdateProfile extends AppCompatActivity {
         return emailLayout.getError()==null&&githubLayout.getError()==null&&lindedinLayout.getError()==null;
     }
 
-    public BlogUser toSimpleUser(BlogUser blogUser) {
-        for (BlogUser user : blogUser.getFollower()) {
-            user.setFollowers(null);
-            user.setFollowing(null);
-            user.setPostedBlogs(null);
-            user.setBlogHistories(null);
-        }
 
-        for (BlogUser user : blogUser.getFollowings()) {
-            user.setFollowers(null);
-            user.setFollowing(null);
-            user.setPostedBlogs(null);
-            user.setBlogHistories(null);
-        }
-
-        for (BlogHistory blogHistory : blogUser.getBlogHistories()) {
-            blogHistory.setBlogUser(null);
-            blogHistory.getBlog().setBlogUser(null);
-            blogHistory.getBlog().setBlogHistories(null);
-        }
-
-        for (Blog blog : blogUser.getPostedBlogs()) {
-            blog.setBlogUser(null);
-            blog.setBlogHistories(null);
-        }
-
-        return blogUser;
-    }
 }
