@@ -22,9 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
     BottomNavigationView bottomNavigationView;
     View headerView;
     TextView usernameText;
+    ImageView imageView;
     ActivityResultLauncher<Intent> resultLauncher;
 
 
@@ -48,8 +49,14 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
         viewPager2 = findViewById(R.id.view_pager);
         navigationView = findViewById(R.id.nav_view);
+
         headerView = navigationView.getHeaderView(0);
         usernameText = headerView.findViewById(R.id.usernameText);
+        imageView = headerView.findViewById(R.id.imageView);
+        Glide.with(this)
+                .load(pref.getString("headPicture",null))
+                .circleCrop()
+                .into(imageView);
         usernameText.setText("Hello, "+pref.getString("userName",null));
         drawerLayout = findViewById(R.id.drawer_layout);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -89,8 +96,8 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
                             .show();
                 }
 
-                //点击抽屉里面的item之后，自动关闭抽屉
-                drawerLayout.closeDrawer(GravityCompat.START);
+
+                drawerLayout.closeDrawer(GravityCompat.START);//点击抽屉里面的item之后，自动关闭抽屉
                 return true;
             }
         });

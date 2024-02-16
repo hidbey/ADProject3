@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import iss.workshop.adproject.Adapters.BlogCardAdapter;
 import iss.workshop.adproject.Adapters.TitleAdapter;
 import iss.workshop.adproject.DataService.BlogDataService;
 import iss.workshop.adproject.Model.Blog;
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BlogsViewingFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private TitleAdapter adapter;
+    private BlogCardAdapter adapter;
     private BlogDataService bDService;
     private List<Blog> titles = new ArrayList<>();
     @Override
@@ -62,7 +63,7 @@ public class BlogsViewingFragment extends Fragment {
             public void onResponse(Call<List<Blog>> call, Response<List<Blog>> response) {
                 if (response.isSuccessful()&&response.body()!=null){
                     titles = response.body();
-                    adapter = new TitleAdapter(titles, getActivity());
+                    adapter = new BlogCardAdapter(titles, getActivity());
                     recyclerView.setAdapter(adapter);
                 }
             }

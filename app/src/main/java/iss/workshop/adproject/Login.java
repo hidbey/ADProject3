@@ -94,6 +94,7 @@ public class Login extends AppCompatActivity {
                         //edit.putSerializable("custom_object", user);不知道为什么报错
                         editor.putInt("user",user.getUserId());
                         editor.putString("userName",user.getDisplayName());
+                        editor.putString("headPicture",user.getProfilePicture());
                         editor.commit();
                         inHomePage();
                     }else {
