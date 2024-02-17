@@ -4,10 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.flexbox.FlexboxLayout;
+
+import java.util.Arrays;
+import java.util.List;
 
 import iss.workshop.adproject.Model.BlogUser;
 import iss.workshop.adproject.R;
@@ -95,14 +104,67 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     class Card2ViewHolder extends RecyclerView.ViewHolder{
         EditText profileTagLineEditText;
+        ImageView btnAddTech;
+        EditText editText;
+        FlexboxLayout flexboxLayout;
 
         public Card2ViewHolder(@NonNull View itemView) {
             super(itemView);
             profileTagLineEditText = itemView.findViewById(R.id.editTextProfileTagLine);
+            editText = itemView.findViewById(R.id.etTechStack);
+            flexboxLayout =itemView.findViewById(R.id.flexboxLayout);
+            btnAddTech = itemView.findViewById(R.id.btnAddTech);
+
+            btnAddTech.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tech = editText.getText().toString().trim();
+                    if (!tech.isEmpty()) {
+                        // 创建 TextView 作为技术栈标签
+                        TextView techView = new TextView(view.getContext());
+                        techView.setText(tech);
+                        techView.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.tech_stack_label_border));
+                        //techView.setBackgroundResource(R.drawable.tech_stack_label_background); // 背景样式
+                        FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
+                                FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                                FlexboxLayout.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(12, 12, 12, 12); // 设置外边距
+                        techView.setLayoutParams(layoutParams);
+                        techView.setPadding(20, 10, 20, 10);
+                        techView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+                        // 将标签添加到 FlexboxLayout
+                        flexboxLayout.addView(techView);
+                        editText.setText("");
+                    }
+                }
+            });
         }
 
         public void bind(BlogUser user){
             profileTagLineEditText.setText(user.getProfileTagline());
+
+            String myTechStack = user.getMyTechStack();
+            List<String>techs = Arrays.asList(myTechStack.split(","));
+            for (String tech:techs) {
+                TextView techView = new TextView(itemView.getContext());//要提供有效的上下文来创建视图
+                techView.setText(tech.trim());
+                techView.setText(tech.trim());
+                techView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.tech_stack_label_border));
+                FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
+                        FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                        FlexboxLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(12, 12, 12, 12); // 设置外边距
+                techView.setLayoutParams(layoutParams);
+                techView.setPadding(20, 10, 20, 10);
+
+                flexboxLayout.addView(techView);
+            }
         }
     }
 

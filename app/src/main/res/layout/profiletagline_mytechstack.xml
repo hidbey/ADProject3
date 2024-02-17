@@ -6,11 +6,12 @@
     android:layout_margin="4dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- TagLine Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,8 +21,8 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="TagLine"
+                android:layout_weight="1"
                 android:gravity="start|center_vertical" />
 
             <EditText
@@ -34,37 +35,56 @@
                 android:gravity="start|center_vertical" />
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
-
-            <EditText
-                android:id="@+id/etTechStack"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Enter tech stack"/>
-
-            <Button
-                android:id="@+id/btnAddTech"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"/>
-
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/flexboxLayout"
+            android:padding="10dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap"
-                app:justifyContent="flex_start"
-                app:alignItems="flex_start">
-            </com.google.android.flexbox.FlexboxLayout>
+                android:orientation="horizontal"
+                android:padding="0dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="TechStack"
 
-        </LinearLayout>
+                    android:gravity="start|center_vertical" />
+
+                <EditText
+                    android:id="@+id/etTechStack"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Enter tech stack"/>
+
+                <ImageView
+                    android:id="@+id/btnAddTech"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/add"/>
+
+
+            </LinearLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexboxLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            app:alignItems="flex_start">
+            <!-- Tech stack tags will be dynamically added here -->
+        </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 
+    </LinearLayout>
 
 
 
