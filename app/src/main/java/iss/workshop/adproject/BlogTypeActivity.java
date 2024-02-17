@@ -73,7 +73,7 @@ public class BlogTypeActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 执行返回操作，例如调用 finish() 方法关闭当前 Activity
+                //执行返回操作，例如调用 finish()方法关闭当前Activity
                 finish();
             }
         });
@@ -165,17 +165,17 @@ public class BlogTypeActivity extends AppCompatActivity {
                 ImageView imageUpload = findViewById(R.id.image_upload);
 
                 if (checkedId == R.id.chip_single_image) {
-                    //如果选择了“单图”，设置 TextView 宽度为 wrap_content
+                    //如果选择了单图，设置 TextView 宽度为wrap_content
                     RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) contentTitleTextView.getLayoutParams();
                     layoutParams.width = 850; //或者 getResources().getDimensionPixelSize(R.dimen.your_dimension)
 //应用修改后的LayoutParams
                     contentTitleTextView.setLayoutParams(layoutParams);
-                    // 显示 ImageView
+                    // 显示ImageView
                     imageUpload.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.chip_no_cover) { //如果选择了“无封面”，设置TextView宽度为match_parent
                     contentTitleTextView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
                     contentTitleTextView.requestLayout();
-                    // 隐藏 ImageView
+                    // 隐藏ImageView
                     imageUpload.setVisibility(View.GONE);
                 }
             }

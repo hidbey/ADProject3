@@ -95,7 +95,7 @@ public class UserDetailActivity extends AppCompatActivity {
         activeUserId = pref.getInt("user", 0);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://192.168.1.126:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
