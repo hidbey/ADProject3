@@ -23,6 +23,21 @@ public class BlogUser implements Serializable {
     private List<BlogUser> followers;
     private List<BlogHistory> blogHistories;
     private List<Blog> postedBlogs;
+    private String likedBlogIds;
+    public String getLikedBlogIds() {
+        return likedBlogIds;
+    }
+    public void setLikedBlogIds(String likedBlogIds) {
+        this.likedBlogIds = likedBlogIds;
+    }
+    public String getFavouriteBlogIds() {
+        return favouriteBlogIds;
+    }
+    public void setFavouriteBlogIds(String favouriteBlogIds) {
+        this.favouriteBlogIds = favouriteBlogIds;
+    }
+
+    private String favouriteBlogIds;
 
     public BlogUser() {}
     public BlogUser( String displayName,

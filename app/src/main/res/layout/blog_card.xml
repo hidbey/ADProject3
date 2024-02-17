@@ -9,7 +9,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="8dp">
+
+        <!-- 封面图片 -->
+        <ImageView
+            android:id="@+id/item_cover"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp" />
 
         <!-- 用户头像 -->
         <ImageView
@@ -27,44 +36,31 @@
             android:layout_toEndOf="@id/profile_picture"
             android:layout_alignTop="@id/profile_picture"
             android:layout_marginStart="8dp"
-            android:text="用户名"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            android:layout_marginTop="4dp"
+        android:text="用户名"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
         <!-- 博客标题 -->
         <TextView
             android:id="@+id/item_title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/profile_picture"
             android:layout_below="@id/item_username"
-            android:layout_alignParentStart="true"
+            android:layout_alignStart="@id/profile_picture"
             android:layout_toStartOf="@+id/item_cover"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="15dp"
-            android:text="博客标题"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-        <!-- 封面图片，占据剩余1/4的空间 -->
-        <ImageView
-            android:id="@+id/item_cover"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            app:srcCompat="@drawable/home1" />
+            android:layout_marginTop="15dp"
+        android:text="博客标题"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <!-- 点赞和评论数 -->
         <LinearLayout
             android:id="@+id/blogStats"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_title"
             android:orientation="horizontal"
             android:gravity="start"
-            android:paddingStart="1dp"
-            android:paddingTop="22dp"
-            android:paddingBottom="0dp">
+            android:paddingTop="18dp">
 
             <ImageView
                 android:layout_width="16dp"
@@ -83,6 +79,7 @@
                 android:layout_height="16dp"
                 android:src="@drawable/comment"
                 android:layout_marginStart="8dp"/>
+
             <TextView
                 android:id="@+id/blogComments"
                 android:layout_width="wrap_content"
@@ -94,3 +91,5 @@
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
+
+

@@ -19,8 +19,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/github" />
-
+                android:src="@drawable/github"
+                android:scaleType="fitStart" />
 
             <EditText
                 android:id="@+id/editTextGithub"
@@ -42,7 +42,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/linkedin" />
+                android:src="@drawable/linkedin"
+                android:scaleType="fitStart"/>
 
             <!-- 用户名输入区 -->
             <EditText
@@ -66,7 +67,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/aboutme" />
+                android:src="@drawable/aboutme"
+                android:scaleType="fitStart"/>
 
             <EditText
                 android:id="@+id/editTextAboutme"

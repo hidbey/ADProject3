@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
         List<Fragment>fragments = new ArrayList<>();
         myHomeAdapter.setFragments(fragments);
         fragments.add(new BlogsViewingFragment());
-        fragments.add(new BlankFragment2());
+        fragments.add(new BlogSearchingFragment());
         fragments.add(new HistoryViewingFragment());
         fragments.add(new BlankFragment4());
         viewPager2.setAdapter(myHomeAdapter);

@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/searchImage"
-        android:icon="@drawable/search2"
+        android:icon="@drawable/search"
         android:title="Search" />
 
     <item

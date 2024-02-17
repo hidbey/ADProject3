@@ -95,7 +95,8 @@ public class Login extends AppCompatActivity {
                         editor.putInt("user",user.getUserId());
                         editor.putString("userName",user.getDisplayName());
                         editor.putString("headPicture",user.getProfilePicture());
-
+                        editor.putString("likeList", user.getLikedBlogIds());  // TODO new new new
+                        editor.putString("favoriteList", user.getFavouriteBlogIds());  // TODO new new new
                         editor.commit();
                         inHomePage();
                     }else {

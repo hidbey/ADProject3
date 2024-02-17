@@ -36,7 +36,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
     @Override
     public void onBindViewHolder(@NonNull TitleViewHolder holder, int position) {
         holder.blogTitle.setText(titles.get(position).getContentTitle());
-        holder.blogAuthor.setText(titles.get(position).getBlogUser().getDisplayName());
+        //holder.blogAuthor.setText(titles.get(position).getBlogUser().getDisplayName());
         holder.blogLikes.setText(String.valueOf(titles.get(position).getBlogLikeCount()));
         holder.blogViews.setText(String.valueOf(titles.get(position).getBlogCommentCount()));
     }
@@ -48,14 +48,14 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
 
     class TitleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView blogTitle;
-        TextView blogAuthor;
+        //TextView blogAuthor;
         TextView blogLikes;
         TextView blogViews;
 
         public TitleViewHolder(@NonNull View itemView) {
             super(itemView);
             blogTitle = itemView.findViewById(R.id.blogTitle);
-            blogAuthor = itemView.findViewById(R.id.blogAuthor);
+            //blogAuthor = itemView.findViewById(R.id.blogAuthor);
             blogLikes = itemView.findViewById(R.id.blogLikes);
             blogViews = itemView.findViewById(R.id.blogViews);
             itemView.setOnClickListener(this);
@@ -68,8 +68,10 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
                 Blog blog = titles.get(position);
                 // 启动 BlogDetailActivity，并传递标题数据
                 Intent intent = new Intent(context, BlogDetailActivity.class);
-                intent.putExtra("blog", blog);
-
+                intent.putExtra("blogId", blog.getBlogId());
+                intent.putExtra("blogInList", blog); // TODO new new new
+                intent.putExtra("position", position); // TODO new new new
+                intent.putExtra("from","user");
                 context.startActivity(intent);
             }
         }

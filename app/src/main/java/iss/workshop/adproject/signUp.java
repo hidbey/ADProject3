@@ -221,7 +221,7 @@ public class signUp extends AppCompatActivity {
     }
 
     public void inHomePage() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }//进入主界面
 

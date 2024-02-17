@@ -5,6 +5,8 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import java.util.List;
 
@@ -30,4 +32,9 @@ public interface UserDataService {
 
     @GET("/account/api/blogusers/{id}")
     Call<BlogUser> getBloguserById(@Path("id")int id);
+
+    @FormUrlEncoded
+    @POST("/user/api/follow")
+    Call<ResponseBody> follow(@Field("viewUserId") int viewUserId,
+                              @Field("activeUserId") int activeUserId);
 }

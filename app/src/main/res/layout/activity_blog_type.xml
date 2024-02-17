@@ -114,7 +114,7 @@
                     android:id="@+id/net_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="C"
+                    android:text="net"
                     android:checkable="true"
                     android:clickable="true"/>
 

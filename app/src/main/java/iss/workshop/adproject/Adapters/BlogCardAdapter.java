@@ -29,6 +29,9 @@ public class BlogCardAdapter extends RecyclerView.Adapter<BlogCardAdapter.BlogCa
         this.context = context;
     }
 
+    public void setBlogs(List<Blog>blogs){
+        this.blogs = blogs;
+    }
 
     @NonNull
     @Override
@@ -44,6 +47,10 @@ public class BlogCardAdapter extends RecyclerView.Adapter<BlogCardAdapter.BlogCa
                 .load(blogs.get(position).getBlogUser().getProfilePicture())
                 .circleCrop()
                 .into(holder.imageView);
+        Glide.with(holder.itemView.getContext())
+                .load(blogs.get(position).getImage())
+                .into(holder.coverView);
+
         holder.blogTitle.setText(blogs.get(position).getContentTitle());
         holder.blogAuthor.setText(blogs.get(position).getBlogUser().getDisplayName());
         holder.blogLikes.setText(String.valueOf(blogs.get(position).getBlogLikeCount()));
@@ -56,7 +63,7 @@ public class BlogCardAdapter extends RecyclerView.Adapter<BlogCardAdapter.BlogCa
     }
 
     class BlogCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView imageView;
+        ImageView imageView,coverView;
         TextView blogTitle;
         TextView blogAuthor;
         TextView blogLikes;
@@ -70,6 +77,7 @@ public class BlogCardAdapter extends RecyclerView.Adapter<BlogCardAdapter.BlogCa
             blogAuthor = itemView.findViewById(R.id.item_username);
             blogLikes = itemView.findViewById(R.id.blogLikes);
             blogComments = itemView.findViewById(R.id.blogComments);
+            coverView = itemView.findViewById(R.id.item_cover);
             itemView.setOnClickListener(this);
         }
 
@@ -80,8 +88,10 @@ public class BlogCardAdapter extends RecyclerView.Adapter<BlogCardAdapter.BlogCa
                 Blog blog = blogs.get(position);
                 // 启动 BlogDetailActivity，并传递标题数据
                 Intent intent = new Intent(context, BlogDetailActivity.class);
-                intent.putExtra("blog", blog);
-
+                intent.putExtra("blogId", blog.getBlogId());
+                intent.putExtra("blogInList", blog); // TODO new new new
+                intent.putExtra("position", position); // TODO new new new
+                intent.putExtra("from","home");
                 context.startActivity(intent);
             }
         }

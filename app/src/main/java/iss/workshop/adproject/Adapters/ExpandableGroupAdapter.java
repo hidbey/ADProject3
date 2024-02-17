@@ -142,14 +142,15 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     class TitleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView blogTitle;
-        TextView blogAuthor;
+        //TextView blogAuthor;
         TextView blogLikes;
         TextView blogViews;
+
 
         public TitleViewHolder(@NonNull View itemView) {
             super(itemView);
             blogTitle = itemView.findViewById(R.id.blogTitle);
-            blogAuthor = itemView.findViewById(R.id.blogAuthor);
+           // blogAuthor = itemView.findViewById(R.id.blogAuthor);
             blogLikes = itemView.findViewById(R.id.blogLikes);
             blogViews = itemView.findViewById(R.id.blogViews);
 
@@ -158,7 +159,7 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public void bind(Blog blog){
             this.blogTitle.setText(blog.getContentTitle());
-            this.blogAuthor.setText(blog.getBlogUser().getDisplayName());
+            //this.blogAuthor.setText(blog.getBlogUser().getDisplayName());
             this.blogLikes.setText(String.valueOf(blog.getBlogLikeCount()));
             this.blogViews.setText(String.valueOf(blog.getBlogCommentCount()));
         }
@@ -170,7 +171,10 @@ public class ExpandableGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 Blog blog = getBlogByPosition(position); //调用getBlogByPosition来获取到当前位置的blog
                 if (blog != null) {
                     Intent intent = new Intent(context, BlogDetailActivity.class);
-                    intent.putExtra("blog", blog);
+                    intent.putExtra("blogId", blog.getBlogId());
+                    intent.putExtra("blogInList", blog); // TODO new new new
+                    intent.putExtra("position", position); // TODO new new new
+                    intent.putExtra("from","posted");
                     context.startActivity(intent);
                 }
             }

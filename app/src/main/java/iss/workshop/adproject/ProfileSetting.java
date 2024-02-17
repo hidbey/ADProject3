@@ -7,6 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import iss.workshop.adproject.Adapters.ProfileSettingAdapter;
 import iss.workshop.adproject.DataService.UserDataService;
@@ -23,6 +28,9 @@ public class ProfileSetting extends AppCompatActivity {
     int id;
     UserDataService uDService;
     BlogUser findedUser;
+    String profilePicture;
+    ImageView imageView;
+    Button savaButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +44,27 @@ public class ProfileSetting extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         id  = pref.getInt("user",-1);
+        profilePicture = pref.getString("headPicture",null);
+        imageView = findViewById(R.id.imageViewProfile);
+        Glide.with(this)
+                .load(profilePicture)
+                .circleCrop()
+                .into(imageView);
+
+        savaButton = findViewById(R.id.buttonSaveProfile);
         uDService = retrofit.create(UserDataService.class);
         recyclerView = findViewById(R.id.recyclerViewProfileCards);
         findBlogUserById(id);
 
-
+        savaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileSettingAdapter adapter = (ProfileSettingAdapter) recyclerView.getAdapter();
+                adapter.saveUpdatedUser();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 
 
@@ -51,7 +75,7 @@ public class ProfileSetting extends AppCompatActivity {
             public void onResponse(Call<BlogUser> call, Response<BlogUser> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     findedUser = response.body();
-                    profileSettingAdapter = new ProfileSettingAdapter(findedUser);
+                    profileSettingAdapter = new ProfileSettingAdapter(findedUser,getApplicationContext());
                     recyclerView.setLayoutManager(new LinearLayoutManager(ProfileSetting.this));
                     recyclerView.setAdapter(profileSettingAdapter);
                 }

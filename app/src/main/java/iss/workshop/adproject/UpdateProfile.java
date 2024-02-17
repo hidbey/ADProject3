@@ -202,7 +202,6 @@ public class UpdateProfile extends AppCompatActivity {
     }
 
     private void saveUserInfo(BlogUser user) {
-
         Call<ResponseBody> call =uDService.updateUser(id,user);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
