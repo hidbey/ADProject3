@@ -95,6 +95,9 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
                             })
                             .setNegativeButton("No", null)
                             .show();
+                } else if (item.getItemId()==R.id.favoriteList) {
+                    Intent intent1 = new Intent(HomeActivity.this,FavoriteActivity.class);
+                    resultLauncher.launch(intent1);
                 }
 
 

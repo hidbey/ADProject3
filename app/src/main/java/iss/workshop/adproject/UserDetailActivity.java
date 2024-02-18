@@ -43,7 +43,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private UserDataService uDService;
     private BlogUser user;
     private ImageView userAvatarImageView;
-    private TextView usernameTextView;
+    private TextView usernameTextView, githubTextView, linkedinTextView, aboutMeTextView;
     private TextView followingCountTextView;
     private TextView followersCountTextView;
     private Button followButton;
@@ -95,7 +95,7 @@ public class UserDetailActivity extends AppCompatActivity {
         activeUserId = pref.getInt("user", 0);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.126:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -107,6 +107,10 @@ public class UserDetailActivity extends AppCompatActivity {
         followersCountTextView = findViewById(R.id.followersCountTextView);
         followButton = findViewById(R.id.followButton);
         blogsRecyclerView = findViewById(R.id.blogsRecyclerView);
+        githubTextView = findViewById(R.id.textViewGithub);
+        linkedinTextView = findViewById(R.id.textViewLinkedin);
+        aboutMeTextView = findViewById(R.id.textViewAboutme);
+
 
         // 接收传递的作者信息
         int userId = getIntent().getIntExtra("userId", 0);
@@ -132,6 +136,10 @@ public class UserDetailActivity extends AppCompatActivity {
                     blogs = user.getPostedBlogs();
                     adapter = new TitleAdapter(blogs, UserDetailActivity.this);
                     blogsRecyclerView.setAdapter(adapter);
+
+                    githubTextView.setText(user.getGithubLink());
+                    linkedinTextView.setText(user.getLinkedinLink());
+                    aboutMeTextView.setText(user.getAboutMe());
                 }
             }
 

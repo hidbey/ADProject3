@@ -40,7 +40,7 @@ public class ProfileSetting extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/")
+                .baseUrl("http://192.168.1.126:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         id  = pref.getInt("user",-1);

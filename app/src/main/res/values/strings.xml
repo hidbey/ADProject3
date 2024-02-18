@@ -2,4 +2,5 @@
     <string name="app_name">ADProject</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="xuexiao">10.249.155.87</string>
 </resources>

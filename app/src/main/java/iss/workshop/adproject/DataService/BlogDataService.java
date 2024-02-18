@@ -43,4 +43,7 @@ public interface BlogDataService {
     Call<ResponseBody> favorite(@Field("isfavorited") boolean isfavorited,
                                 @Field("blogId") int blogId,
                                 @Field("userId") int userId);
+
+    @GET("/home/api/getmany/{userId}")
+    Call<List<Blog>> getFavoriteBlogs(@Path("userId") int userId);
 }

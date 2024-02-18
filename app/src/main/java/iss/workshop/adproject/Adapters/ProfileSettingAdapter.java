@@ -25,6 +25,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import iss.workshop.adproject.DataService.UserDataService;
 import iss.workshop.adproject.Model.BlogUser;
@@ -175,7 +176,6 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    // 更新user对象的GitHub链接
                     user.setEmail(editable.toString());
                 }
             });
@@ -191,7 +191,6 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    // 更新user对象的GitHub链接
                     user.setLocation(editable.toString());
                 }
             });
@@ -204,7 +203,9 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         EditText editText;
         FlexboxLayout flexboxLayout;
         String myTechStack=user.getMyTechStack();
-        List<String> techs = new ArrayList<>(Arrays.asList(myTechStack.split(",")));
+        List<String> techs = Arrays.stream(myTechStack.split(","))
+                .map(String::trim) //去除每个元素两侧的空格
+                .collect(Collectors.toList());
         public Card2ViewHolder(@NonNull View itemView) {
             super(itemView);
             profileTagLineEditText = itemView.findViewById(R.id.editTextProfileTagLine);
@@ -216,7 +217,7 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 String tech = editText.getText().toString().trim();
                 if (!tech.isEmpty()) {
                     addTechStack(view.getContext(), tech); // 抽取添加技术栈的逻辑到方法中
-                    editText.setText(""); // 清空输入框
+                    editText.setText("");
                 }
             });
 
@@ -231,7 +232,6 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    // 更新user对象的GitHub链接
                     user.setProfileTagline(editable.toString());
                 }
             });
@@ -269,6 +269,8 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             // 更新 user 对象的 myTechStack 字段
             String techStacks = String.join(", ", techs);
             user.setMyTechStack(techStacks);
+
+
         }
 
         public void bind(BlogUser user){
@@ -281,22 +283,14 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
                         FlexboxLayout.LayoutParams.WRAP_CONTENT,
                         FlexboxLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(12, 12, 12, 12); // 设置外边距
+                layoutParams.setMargins(12, 12, 12, 12); //设置外边距
                 techView.setLayoutParams(layoutParams);
                 techView.setPadding(20, 10, 20, 10);
 
                 techView.setOnLongClickListener(v -> {
                     flexboxLayout.removeView(techView);//长按时移除视图
                     techs.remove(techView.getText().toString());
-                    String techStacks = "";
-                    for (int i = 0; i < techs.size(); i++) {
-                        if (i==0){
-                            techStacks = techs.get(i);
-                        }else {
-                            techStacks = techStacks+", "+techs.get(i);
-                        }
-                    } // 更新 user 对象的 myTechStack 字段
-                    user.setMyTechStack(techStacks);
+                    updateMyTechStack(); // 更新 user 对象的 myTechStack 字段
                     return true; // 返回 true 表示事件已被处理
                 });
                 flexboxLayout.addView(techView);
@@ -308,7 +302,6 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         EditText githubEditText,linkedinEditText,aboutmeEditText;
         public Card3ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             init();
         }
 
@@ -328,7 +321,6 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    // 更新user对象的GitHub链接
                     user.setGithubLink(editable.toString());
                 }
             });
@@ -344,7 +336,6 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    // 更新user对象的GitHub链接
                     user.setLinkedinLink(editable.toString());
                 }
             });
@@ -360,7 +351,7 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    // 更新user对象的GitHub链接
+
                     user.setAboutMe(editable.toString());
                 }
             });

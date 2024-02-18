@@ -1,15 +1,23 @@
 package iss.workshop.adproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -62,6 +70,7 @@ public class BlogDetailActivity extends AppCompatActivity {
     private RecyclerView rvComments;
     private BlogDataService bDService;// TODO ↑
     private String from;
+    private boolean isViewingBlogDetail = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +79,7 @@ public class BlogDetailActivity extends AppCompatActivity {
 
         // TODO ↓
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.126:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -92,7 +101,7 @@ public class BlogDetailActivity extends AppCompatActivity {
         // TODO 初始化视图组件 ↑
 
         // TODO get Blog
-        Intent intent  = getIntent();
+        Intent intent = getIntent();
         blogId = intent.getIntExtra("blogId", 0);
         blogInList = (Blog) intent.getSerializableExtra("blogInList");
         from = intent.getStringExtra("from");
@@ -103,7 +112,7 @@ public class BlogDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<Blog>() {
             @Override
             public void onResponse(Call<Blog> call, Response<Blog> response) {
-                if (response.isSuccessful()&&response.body()!=null) {
+                if (response.isSuccessful() && response.body() != null) {
                     blog = response.body();
 
                     Glide.with(BlogDetailActivity.this)
@@ -131,6 +140,18 @@ public class BlogDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        isViewingBlogDetail = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "BlogNotificationChannel"; // 通道名字
+            String description = "Channel for Blog App Notifications"; // 通道描述
+            int importance = NotificationManager.IMPORTANCE_DEFAULT; // 通道重要性
+            NotificationChannel channel = new NotificationChannel("blogNotification", name, importance);
+            channel.setDescription(description);
+            // 注册通道
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
 
 //        blogId = blog.getBlogId(); // TODO new
 
@@ -218,7 +239,7 @@ public class BlogDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()&&response.body()!=null) {
+                if (response.isSuccessful() && response.body() != null) {
 
                 }
             }
@@ -256,6 +277,14 @@ public class BlogDetailActivity extends AppCompatActivity {
         }, 500); // 延迟时间设置为0.5s
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isViewingBlogDetail = false;
+    }
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -264,10 +293,44 @@ public class BlogDetailActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
         }
+
+        if (isViewingBlogDetail) {
+            // 用户离开了BlogDetailActivity，发送通知
+            sendNotification("Blog Title");
+        }
+    }
+
+    private void sendNotification(String blogTitle) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // 创建通知Intent
+        Intent intent = new Intent(this, BlogDetailActivity.class);
+        intent.putExtra("blogId", blog.getBlogId());
+        intent.putExtra("blogInList", blog); // TODO new new new
+        intent.putExtra("position", position); // TODO new new new
+        intent.putExtra("from","home");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); //这将确保用户回到他们之前的Activity
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "blogNotification")
+                .setSmallIcon(R.drawable.notificationlogo) // 设置通知小图标
+                .setContentTitle("Blog Post") // 设置通知标题
+                .setContentText("You're reading: " + blogTitle) // 设置通知内容
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT) // 设置通知优先级
+                .setContentIntent(pendingIntent) // 设置点击通知后的操作
+                .setAutoCancel(true); // 点击通知后自动移除通知
+
+        // 发送通知
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        notificationManager.notify(1, builder.build());
     }
 
     @Override
     public void onBackPressed() {
+        isViewingBlogDetail = false;
         // 如果输入框是可见的，则隐藏它并且隐藏键盘
         if (commentInputContainer.getVisibility() == View.VISIBLE) {
             commentInputContainer.setVisibility(View.GONE);

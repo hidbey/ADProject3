@@ -21,6 +21,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -191,9 +194,10 @@ public class BlogTypeActivity extends AppCompatActivity {
 
 
     public String getPostTime() {
-        LocalDate createdTime = LocalDate.now();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("Asia/Shanghai")); // 明确指定为"Asia/Shanghai"时区
+        LocalDate localDate = currentDate.toLocalDate(); // 转换为LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-        String formattedDate = createdTime.format(formatter);
+        String formattedDate = currentDate.format(formatter);
         return formattedDate;
     }
 
