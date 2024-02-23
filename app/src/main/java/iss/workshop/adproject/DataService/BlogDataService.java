@@ -46,4 +46,10 @@ public interface BlogDataService {
 
     @GET("/home/api/getmany/{userId}")
     Call<List<Blog>> getFavoriteBlogs(@Path("userId") int userId);
+
+    @GET("/home/api/recommend/list/{userId}")
+    Call<List<Blog>> getRecommendedBlogs(@Path("userId") int userId);
+
+    @GET("/home/api/search/{query}")
+    Call<List<Blog>> getSearchResults(@Path("query") String query);
 }

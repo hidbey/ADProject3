@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import iss.workshop.adproject.DataService.UserDataService;
 import iss.workshop.adproject.Model.BUserStatusEnum;
@@ -43,7 +44,7 @@ public class signUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.193.162:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 //.client(okHttpClient)
                 .build();
@@ -150,14 +151,12 @@ public class signUp extends AppCompatActivity {
                     if (response.isSuccessful()&&response.body()!=null){
                         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("username",username);
-                        editor.putString("email",email);
-                        editor.putString("myTechStack",user.getMyTechStack());
-                        editor.putString("profileTagline",user.getProfileTagline());
-                        editor.putString("aboutMe",user.getAboutMe());
-                        editor.putString("location",user.getLocation());
-                        editor.putString("githubLink",user.getGithubLink());
-                        editor.putString("linkedinLink",user.getLinkedinLink());
+                        editor.putInt("user",user.getUserId());
+                        editor.putString("userName",user.getDisplayName());
+                        editor.putString("headPicture",user.getProfilePicture());
+                        editor.putString("likeList", user.getLikedBlogIds());  // TODO new new new
+                        editor.putString("favoriteList", user.getFavouriteBlogIds());  // TODO new new new
+                        editor.commit();
                         inHomePage();
                     }else{
                         Log.d("2Retrofit", "Response Body: " + response.body());
@@ -232,14 +231,17 @@ public class signUp extends AppCompatActivity {
         LocalDate now = LocalDate.now();
         user.setSignupTime(now.toString());//因为json都是用字符串当作键的，这里用localdate的话
         user.setUserStatus(BUserStatusEnum.ACTIVE);
-        user.setAboutMe(null);
-        user.setBlogHistories(null);
-        user.setProfilePicture(null);
-        user.setLocation(null);
-        user.setGithubLink(null);
-        user.setBlogHistories(null);
-        user.setLinkedinLink(null);
-        user.setMyTechStack(null);
-        user.setPostedBlogs(null);
+        user.setAboutMe("");
+        user.setProfilePicture("");
+        user.setLocation("");
+        user.setGithubLink("");
+        user.setBlogHistories(new ArrayList<>());
+        user.setLinkedinLink("");
+        user.setMyTechStack("");
+        user.setPostedBlogs(new ArrayList<>());
+        user.setFavouriteBlogIds("");
+        user.setFollowers(new ArrayList<>());user.setFollowing(new ArrayList<>());
+        user.setLikedBlogIds("");
+
     }
 }

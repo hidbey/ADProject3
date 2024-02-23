@@ -71,7 +71,7 @@
                     android:id="@+id/chip_single_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="单图"
+                    android:text="single image"
                     android:checkable="true"
 
                     android:clickable="true"/>
@@ -80,7 +80,7 @@
                     android:id="@+id/chip_no_cover"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="无封面"
+                    android:text="no cover"
                     android:checkable="true"
                     android:checked="true"
                     android:clickable="true"/>

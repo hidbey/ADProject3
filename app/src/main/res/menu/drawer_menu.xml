@@ -15,6 +15,11 @@
         android:title="favorite List"/>
 
     <item
+        android:id="@+id/followings"
+        android:icon="@drawable/followings"
+        android:title="followings"/>
+
+    <item
         android:id="@+id/logout"
         android:icon="@drawable/logout"
         android:title="logout" />

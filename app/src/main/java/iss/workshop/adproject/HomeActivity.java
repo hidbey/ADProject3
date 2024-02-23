@@ -98,6 +98,9 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
                 } else if (item.getItemId()==R.id.favoriteList) {
                     Intent intent1 = new Intent(HomeActivity.this,FavoriteActivity.class);
                     resultLauncher.launch(intent1);
+                } else if (item.getItemId()==R.id.followings) {
+                    Intent intent1 = new Intent(HomeActivity.this,FollowingUsersActivity.class);
+                    startActivity(intent1);
                 }
 
 
@@ -134,9 +137,13 @@ public class HomeActivity extends AppCompatActivity {//viewPager也需要适配�
 
         List<Fragment>fragments = new ArrayList<>();
         myHomeAdapter.setFragments(fragments);
-        fragments.add(new BlogsViewingFragment());
+        BlogsViewingFragment blogsViewingFragment = new BlogsViewingFragment();
+        blogsViewingFragment.setContext(this);
+        fragments.add(blogsViewingFragment);
         fragments.add(new BlogSearchingFragment());
-        fragments.add(new HistoryViewingFragment());
+        HistoryViewingFragment historyViewingFragment = new HistoryViewingFragment();
+        historyViewingFragment.setContext(this);
+        fragments.add(historyViewingFragment);
         fragments.add(new BlankFragment4());
         viewPager2.setAdapter(myHomeAdapter);
 

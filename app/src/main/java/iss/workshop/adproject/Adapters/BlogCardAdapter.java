@@ -2,6 +2,7 @@ package iss.workshop.adproject.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -46,6 +52,25 @@ public class BlogCardAdapter extends RecyclerView.Adapter<BlogCardAdapter.BlogCa
         Glide.with(holder.itemView.getContext())
                 .load(blogs.get(position).getBlogUser().getProfilePicture())
                 .circleCrop()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (e != null) {
+                            // 这里记录详细的异常原因到日志
+                            e.logRootCauses("Glide"); // "Glide" 是日志标签
+                            // 打印异常的堆栈跟踪
+                            e.printStackTrace();
+                        }
+                        // 返回 false 让 Glide 处理错误的占位图
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        // 图片加载成功
+                        return false;
+                    }
+                })
                 .into(holder.imageView);
         Glide.with(holder.itemView.getContext())
                 .load(blogs.get(position).getImage())

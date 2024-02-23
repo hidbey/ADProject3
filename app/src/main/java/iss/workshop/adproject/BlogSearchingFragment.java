@@ -57,7 +57,7 @@ public class BlogSearchingFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_seraching_result_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.193.162:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         bDService = retrofit.create(BlogDataService.class);
@@ -75,7 +75,7 @@ public class BlogSearchingFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getAllBlogs();
+                getAllBlogs(query);
 
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
@@ -101,8 +101,9 @@ public class BlogSearchingFragment extends Fragment {
         return view;
     }
 
-    public void getAllBlogs(){
-        Call<List<Blog>> call = bDService.getAllBlogs();
+    public void getAllBlogs(String query){
+        //Call<List<Blog>> call = bDService.getAllBlogs();
+        Call<List<Blog>>call = bDService.getSearchResults(query);
         call.enqueue(new Callback<List<Blog>>() {
             @Override
             public void onResponse(Call<List<Blog>> call, Response<List<Blog>> response) {

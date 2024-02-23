@@ -1,9 +1,12 @@
 package iss.workshop.adproject;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -36,6 +39,8 @@ public class BlogsViewingFragment extends Fragment {
     private BlogDataService bDService;
     private List<Blog> titles = new ArrayList<>();
     private int pos;
+    private int id;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,10 @@ public class BlogsViewingFragment extends Fragment {
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
         IntentFilter intentFilter = new IntentFilter("countChange");
         broadcastManager.registerReceiver(mMessageReceiver, intentFilter);
+    }
+
+    public void setContext(Context context){
+        this.context = context;
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -74,7 +83,7 @@ public class BlogsViewingFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.193.162:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -86,7 +95,9 @@ public class BlogsViewingFragment extends Fragment {
 
     private void getTitles() {
         // TODO: 返回标题列表数据，例如从数据库或服务器获取
-        Call<List<Blog>> call = bDService.getAllBlogs();
+        SharedPreferences preferences =  context.getSharedPreferences("user", MODE_PRIVATE);
+
+        Call<List<Blog>> call = bDService.getRecommendedBlogs(preferences.getInt("user",2));
         call.enqueue(new Callback<List<Blog>>() {
             @Override
             public void onResponse(Call<List<Blog>> call, Response<List<Blog>> response) {
@@ -95,7 +106,6 @@ public class BlogsViewingFragment extends Fragment {
                     adapter.setBlogs(titles);
                     recyclerView.setAdapter(adapter);
                 }
-
             }
 
             @Override

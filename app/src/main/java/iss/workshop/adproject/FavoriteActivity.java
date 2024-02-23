@@ -35,7 +35,7 @@ public class FavoriteActivity extends AppCompatActivity {
         activeUserId = pref.getInt("user", 0);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/")
+                .baseUrl("http://10.249.193.162:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         bDService = retrofit.create(BlogDataService.class);

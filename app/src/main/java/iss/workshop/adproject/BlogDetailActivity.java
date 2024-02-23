@@ -79,7 +79,7 @@ public class BlogDetailActivity extends AppCompatActivity {
 
         // TODO ↓
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.193.162:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -294,39 +294,72 @@ public class BlogDetailActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
         }
 
-        if (isViewingBlogDetail) {
-            // 用户离开了BlogDetailActivity，发送通知
-            sendNotification("Blog Title");
-        }
+        new Handler().postDelayed(() -> {
+            if (isFinishing() || isChangingConfigurations()) {
+                // 用户可能是在关闭Activity或旋转屏幕，不处理
+            } else {
+                // 应用可能进入后台，发送通知
+                sendNotification();
+            }
+        }, 500); // 500ms延迟
     }
 
-    private void sendNotification(String blogTitle) {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 取消所有通知（如果有的话）
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
 
-        // 创建通知Intent
+    private void sendNotification() {
         Intent intent = new Intent(this, BlogDetailActivity.class);
-        intent.putExtra("blogId", blog.getBlogId());
-        intent.putExtra("blogInList", blog); // TODO new new new
-        intent.putExtra("position", position); // TODO new new new
-        intent.putExtra("from","home");
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); //这将确保用户回到他们之前的Activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "blogNotification")
-                .setSmallIcon(R.drawable.notificationlogo) // 设置通知小图标
-                .setContentTitle("Blog Post") // 设置通知标题
-                .setContentText("You're reading: " + blogTitle) // 设置通知内容
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT) // 设置通知优先级
-                .setContentIntent(pendingIntent) // 设置点击通知后的操作
-                .setAutoCancel(true); // 点击通知后自动移除通知
+                .setSmallIcon(R.drawable.notificationlogo)
+                .setContentTitle("NBlogs")
+                .setContentText("you are viewing "+blog.getContentTitle())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
-        // 发送通知
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
         notificationManager.notify(1, builder.build());
     }
+
+//    private void sendNotification(String blogTitle) {
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//
+//        // 创建通知Intent
+//        Intent intent = new Intent(this, BlogDetailActivity.class);
+//        intent.putExtra("blogId", blog.getBlogId());
+//        intent.putExtra("blogInList", blog); // TODO new new new
+//        intent.putExtra("position", position); // TODO new new new
+//        intent.putExtra("from","home");
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); //这将确保用户回到他们之前的Activity
+//
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "blogNotification")
+//                .setSmallIcon(R.drawable.notificationlogo) // 设置通知小图标
+//                .setContentTitle("Blog Post") // 设置通知标题
+//                .setContentText("You're reading: " + blogTitle) // 设置通知内容
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT) // 设置通知优先级
+//                .setContentIntent(pendingIntent) // 设置点击通知后的操作
+//                .setAutoCancel(true); // 点击通知后自动移除通知
+//
+//        // 发送通知
+//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+//
+//            return;
+//        }
+//        notificationManager.notify(1, builder.build());
+//    }
 
     @Override
     public void onBackPressed() {
@@ -377,14 +410,16 @@ public class BlogDetailActivity extends AppCompatActivity {
     private Boolean isLiked() {
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
         String likeList = pref.getString("likeList", "");
-        return likeList.contains(String.valueOf(blogId));
+        String newLike = "," + likeList + ",";
+        return newLike.contains("," + String.valueOf(blogId) + ",");
     }
 
     // 是否收藏
     private Boolean isFavorited() {
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
         String favoriteList = pref.getString("favoriteList", "");
-        return favoriteList.contains(String.valueOf(blogId));
+        String newFavorite = "," + favoriteList + ",";
+        return newFavorite.contains("," + String.valueOf(blogId) + ",");
     }
 
     private void createLike() {

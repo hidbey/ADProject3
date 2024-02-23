@@ -1,5 +1,7 @@
 package iss.workshop.adproject.Model;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iss.workshop.adproject.DataService.BlogDataService;
+import iss.workshop.adproject.R;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -19,14 +22,28 @@ public class BlogHistoryViewModel extends ViewModel {//集成一下，这边只�
     private BlogDataService bDService;
     List<List<Blog>>titles;
 
+    private Context context;
+
+
     public LiveData<List<BlogGroup>> getBlogGroups() {
         return blogGroupsLiveData;
     }
 
+    public void setContext(Context context){
+        this.context = context;
+
+        initRetrofit();
+    }
+
+
     public BlogHistoryViewModel() {
         // 初始化Retrofit和bDService
+
+    }
+
+    public void initRetrofit(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.249.155.87:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
+                .baseUrl("http://10.249.193.162:8080/") // 替换为您的API的基础URL,必须以斜杠结尾
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         bDService = retrofit.create(BlogDataService.class);
